@@ -16,6 +16,18 @@ bool cmp(pair<int,int> &a, pair<int,int> &b){//If in class, use static keyword
     return a.second < b.second;
 }
 
+int minUnique(vector<pair<int,int>> &sortedOcc, int k){
+    for(int i=0;i<sortedOcc.size();i++){
+        if(k == sortedOcc[i].second){
+            return (sortedOcc.size()-i-1);
+        }
+        else if(k<sortedOcc[i].second){
+            return sortedOcc.size()-i;
+        }
+        k = k - sortedOcc[i].second;
+    }
+}
+
 int main() {
     vector<int> arr = {5,5,4};
     int k = 1;
@@ -27,31 +39,12 @@ int main() {
     /*Sort the vector<pair<int,int>> acc to the pair.second(count) value using cmp function*/
     sort(sortedOcc.begin(), sortedOcc.end(), cmp);
 
-    cout << "Sorted Occurrences:" << endl;
-    for (const auto& pair : sortedOcc) {
-        cout << pair.first << ": " << pair.second << endl;
-    }
-
-    vector<int> temp;
-    for(int i=0; i<sortedOcc.size(); i++){
-        for(int j=0; j<sortedOcc[i].second; j++){
-            temp.push_back(sortedOcc[i].first);
-        }
-    }
-    // cout<<"Finl ";
-    // for(int i: temp){
-    //     cout<<i<<" ";
+    // cout << "Sorted Occurrences:" << endl;
+    // for (const auto& pair : sortedOcc) {
+    //     cout << pair.first << ": " << pair.second << endl;
     // }
-    vector<int> ans;
-    for(int i = k; i<temp.size(); i++){
-        ans.push_back(temp[i]);
-    }
-    set<int> unique;
-    for (int num : ans) {
-        unique.insert(num);
-    }
-    cout<<endl;
-    cout<<unique.size();
     
+    int ans = minUnique(sortedOcc,k);
+    cout<<ans;
     return 0;
 }
